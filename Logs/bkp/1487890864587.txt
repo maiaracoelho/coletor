@@ -1,0 +1,1 @@
+{"start":"1487890797569","end":"1487890863927","team":"Equipe08","date":"2017-02-23","session_time":888120,"session_id":"e4dc4305bb741778-1487890863969","device_id":"e4dc4305bb741778"}
