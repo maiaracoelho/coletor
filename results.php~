@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<script type="text/javascript">
+function validaForm(){
+           d = document.formperfil;
+           
+	if (d.nome.value == ""){
+		alert("O nome do perfil deve ser informado!");
+		d.nome.focus();
+		return false;	
+	}
+}
+
+
+function selecionar(retorno,tipo) 
+{
+var cont=0;
+var frm = document.formperfil;
+        for(i = 0; i < frm.length; i++) 
+        {
+                if(frm.elements[i].type == "checkbox") 
+                {
+                        if (frm.elements[i].name == "nivel[]" && frm.elements[i].alt == tipo)
+                        {
+                        frm.elements[i].checked = retorno;
+						if(frm.elements[i].checked){cont++;}
+                        }
+                }
+        }
+		if(cont==0){
+		  alert("O nome do perfil deve ser informado!");
+		  return false;
+		}
+}
+
+</script>
+
+<body >
+<?php
+
+
+$acao = "Salvar";
+$id_usuario_logado    = $_SESSION['jmt_id_logado'];
+
+if(isset($_POST["id"])) {$id = $_POST["id"];}
+if(isset($_GET["id"])) {$id= $_GET["id"];}
+
+if ($id != ""){
+	$acao = "Alterar";
+    $perfil = new Perfil();
+    $consulta = $perfil->consultarPerfil($id); 	 
+	$result = mysql_fetch_array($consulta);
+	$codigo = $result["id_perfil"];
+	$nome= $result["descricao"];
+}
+    $perfilOperacao = new PerfilOperacao();
+	$pag = 'perfil_manter';
+ 	$consulta2 = $perfilOperacao->verPermissao($id_usuario_logado,$pag);
+	$total_pag = mysql_num_rows($consulta2);
+	if($total_pag == 0)
+	{
+		include "includes/acesso_negado.php";
+	}
+	else {
+?>
+        
+   <table border="0" cellspacing="10" class="table" align="center">
+	<tr>
+		<td valign="middle">
+            <h2 class="title">Cadastro de Perfis</h2>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+        	  <div >
+              <form name="formperfil" method="post" action="grava_dados.php" onSubmit="return validaForm()" class="form">
+					<table  border="0" cellspacing="3" cellpadding="0" class="table">
+						<tr>
+							<td  >
+								<div align="right">*Perfil: </div>
+						  </td>
+						  <td >
+								<div align="left" class="group">
+									<input name="nome" type="text"  id="nome" value="<?php echo ($nome);?>" size="50" maxlength="50">
+								</div>
+						  </td>
+						</tr>
+						
+						<tr>
+							<td height="25">&nbsp;</td>
+							<td height="25" >
+								<div  class="group navform wat-cf">
+								    <input type="hidden" name="id" value="<?php echo "$codigo";?>">
+									<input type="hidden" value="1" name="tbl" >            
+                                    <button class="button" type="submit" name="Submit" value="<?php echo $acao;?>">
+                                       <img src="template/images/icons/tick.png" alt="Salvar" /> <?php echo $acao;?>
+                                    </button>                                 
+                                    <span class="text_button_padding">ou</span>
+                                    <a class="text_button_padding link_button" href="index.php">Cancelar</a>
+                                    <span class="text_button_padding">* Campos Obrigat&oacute;rios</span>
+                                </div>
+							</td>
+						</tr>
+					</table>
+				</form>
+            
+            </div>
+		</td>
+	</tr>
+	
+</table>
+</body>
+</html>

@@ -1,1 +1,0 @@
-{"start":"1488403638825","end":"1488404495538","team":"Experimento08","date":"2017-03-01","session_time":600000,"session_id":"23e18f78114412b-1488404495541","device_id":"23e18f78114412b"}

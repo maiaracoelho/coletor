@@ -1,0 +1,37 @@
+<?php
+include('Conect.php');
+
+class BuffelLevel{
+
+    function BuffelLevel()
+	{
+	}
+	function insertBuffelLevel($time, $level, $fk_execution)
+	{
+            $query="INSERT INTO dash_db.dash_buffelevel (time, level, fk_execution) values ('$time', '$level', '$fk_execution')";
+            mysql_query($query);
+			//echo $query;
+    	}
+	
+	function deleteBuffelLevel($fk_execution)
+	{
+		$query = "DELETE  FROM dash_db.dash_buffelevel WHERE fk_execution = '$fk_execution'";
+		mysql_query($query);
+	}
+	
+	
+	function findBuffelLevelExecution($id_execution)
+	{
+		$query = "SELECT * FROM dash_db.dash_buffelevel WHERE fk_execution = '$id_execution'";
+		return $result = mysql_query($query);
+	}	
+	
+	function getBuffelLevel()
+	{
+		$query = " SELECT * FROM  dash_db.dash_buffelevel";
+		return $result = mysql_query($query);
+	}
+
+}
+
+?>

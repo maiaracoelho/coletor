@@ -1,0 +1,37 @@
+<?php
+include('Conect.php');
+
+class Delay{
+
+    function Delay()
+	{
+	}
+	function insertDelay($time, $delay,  $quality, $fk_execution)
+	{
+            	$query="INSERT INTO dash_db.dash_delay (time, delay, quality, fk_execution) values ('$time', '$delay', '$quality', '$fk_execution')";
+            	mysql_query($query);
+		//echo $query;
+    	}
+	
+	function deleteDelay($id)
+	{
+		$query = "DELETE  FROM dash_db.dash_delay WHERE id_atividade = '$id'";
+		mysql_query($query);
+	}
+	
+	
+	function findDelay($id_execution)
+	{
+		$query = "SELECT * FROM dash_db.dash_delay WHERE fk_execution = '$id_execution'";
+		return $resultado = mysql_query($query);
+	}	
+	
+	function getDelays()
+	{
+		$query = " SELECT * FROM  dash_db.dash_delay";
+		return $resultado = mysql_query($query);
+	}
+
+}
+
+?>
